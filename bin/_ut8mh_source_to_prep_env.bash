@@ -51,7 +51,7 @@
 #
 #   mkdir "/home/egdev/dev standard env"
 #   cd "/home/egdev/dev standard env"
-#   git clone git@github.com:UThere8MyHomework/dev_standard_env.git .
+#   git clone git@github.com-ut8mh:UThere8MyHomework/dev_standard_env.git .
 #
 #       # *** indicate this is the 'home' directory for the standard development environment ***
 #   export GITHUB_UT8MH_DEV_STANDARD_ENV_HOME="/home/egdev/dev standard env"
@@ -469,7 +469,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                         
                         if [ "X${repo_ok}" = "X1" ]; then
 
-                            (cd "${repo_dir_tmp}" && (git clone "git@github.com:UThere8MyHomework/${repo}.git" . >/dev/null 2>/dev/null))
+                            (cd "${repo_dir_tmp}" && (git clone "git@github.com-ut8mh:UThere8MyHomework/${repo}.git" . >/dev/null 2>/dev/null))
                             if [ "X$?" != "X0" ]; then
                                 echo "      ERROR:  problems cloning remote repository \"${repo}\" to local repository \"${repo_dir_tmp}\"";
                                 repo_ok=0;
