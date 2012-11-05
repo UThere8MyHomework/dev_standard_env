@@ -354,76 +354,76 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # -- create directory for dealing with code documentation that will be synced to github "GitHub Pages" at http://UThere8MyHomework.github.com/code/...
 
-    switch_on_old_pull="(presumably) ";
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ! -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode" ]; then
-
-        switch_on_old_pull="newly pulled ";
-
-        # erase any temporary repository copy that may have been created during last pull
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
-            if [ -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not remove pre-existing temporary docs repository clone \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-
-        # make directory to hold temporary repository copy
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            mkdir "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
-            if [ "X$?" != "X0" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not create temporary docs repository local directory \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-
-        # clone the github repository
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            (cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git clone "git@github.com:UThere8MyHomework/code.git" . >/dev/null 2>/dev/null));
-            if [ "X$?" != "X0" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not clone docs repository to \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-
-        # switch to branch 'gh-pages' (actually, already there due to 'default branch' settings in github.com UThere8MyHomework account 'code' repository, but let's do it explicitly
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            (cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git checkout gh-pages . >/dev/null 2>/dev/null));
-            if [ "X$?" != "X0" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not switch local copy of docs repository to branch 'gh-pages' in \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-
-        # confirm the switch to branch 'gh-pages'
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            cur_code_docs_git_branch=`(cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git branch 2>/dev/null)) | sed --expression 's/[\* ]//g'`;
-            if [ "X${cur_code_docs_git_branch}" != "Xgh-pages" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not confirm switch of local copy of docs repository to branch 'gh-pages' in \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-        unset cur_code_docs_git_branch;
-
-        # rename docs local repository directory to permanent name
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-            mv "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
-            if [ "X$?" != "X0" ]; then
-                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-                echo "  ERROR:  could not move temporary docs repository local directory to permanent location \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-            fi
-        fi
-
-        # message if local docs copy failed
-        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" != "X1" ]; then
-            echo "  ERROR:  there were problems mapping public code documentation github repository to \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-        fi
-    fi
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-        # message if local docs copy succeeded or was already present
-        echo "  Local copy of docs repo ${switch_on_old_pull}at : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
-    fi
-    unset switch_on_old_pull;
+#    switch_on_old_pull="(presumably) ";
+#    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ! -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode" ]; then
+#
+#        switch_on_old_pull="newly pulled ";
+#
+#        # erase any temporary repository copy that may have been created during last pull
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
+#            if [ -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not remove pre-existing temporary docs repository clone \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#
+#        # make directory to hold temporary repository copy
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            mkdir "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
+#            if [ "X$?" != "X0" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not create temporary docs repository local directory \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#
+#        # clone the github repository
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            (cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git clone "git@github.com:UThere8MyHomework/code.git" . >/dev/null 2>/dev/null));
+#            if [ "X$?" != "X0" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not clone docs repository to \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#
+#        # switch to branch 'gh-pages' (actually, already there due to 'default branch' settings in github.com UThere8MyHomework account 'code' repository, but let's do it explicitly
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            (cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git checkout gh-pages . >/dev/null 2>/dev/null));
+#            if [ "X$?" != "X0" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not switch local copy of docs repository to branch 'gh-pages' in \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#
+#        # confirm the switch to branch 'gh-pages'
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            cur_code_docs_git_branch=`(cd "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" && (git branch 2>/dev/null)) | sed --expression 's/[\* ]//g'`;
+#            if [ "X${cur_code_docs_git_branch}" != "Xgh-pages" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not confirm switch of local copy of docs repository to branch 'gh-pages' in \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#        unset cur_code_docs_git_branch;
+#
+#        # rename docs local repository directory to permanent name
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#            mv "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/TMP_github_docs_at_UThere8MyHomeworkDgithubDcomScode" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode" 2>/dev/null;
+#            if [ "X$?" != "X0" ]; then
+#                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+#                echo "  ERROR:  could not move temporary docs repository local directory to permanent location \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#            fi
+#        fi
+#
+#        # message if local docs copy failed
+#        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" != "X1" ]; then
+#            echo "  ERROR:  there were problems mapping public code documentation github repository to \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#        fi
+#    fi
+#    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+#        # message if local docs copy succeeded or was already present
+#        echo "  Local copy of docs repo ${switch_on_old_pull}at : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+#    fi
+#    unset switch_on_old_pull;
 
 
         # -- make sure various directories are pulled from github
@@ -436,7 +436,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_"*;
 
-        repo_list=`((echo _build_number_gen _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
+        repo_list=`((echo _build_number_gen | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
         repo_ok=1
         for repo in ${repo_list[@]}; do
 
