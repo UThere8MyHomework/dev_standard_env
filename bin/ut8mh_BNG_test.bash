@@ -12,7 +12,7 @@
 
 # -- some settings
 
-master_git_repo="git@github.com:UThere8MyHomework/_build_number_gen_test.git";
+master_git_repo="git@github.com-ut8mh:UThere8MyHomework/_build_number_gen_test.git";
 git_repo_dir="${HOME}/_ut8mh BNG_test_dir";
 git_repo_parallel_dir="${HOME}/_ut8mh BNG_test_dir__parallel";
 

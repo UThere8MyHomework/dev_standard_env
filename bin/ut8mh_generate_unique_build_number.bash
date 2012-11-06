@@ -62,7 +62,7 @@ echo
 # -- get the master git repository (central repository that holds build numbers and build-related meta-info)
 
 if [ "X${master_git_repo}" = "X" ]; then
-    master_git_repo="git@github.com:UThere8MyHomework/_build_number_gen.git";
+    master_git_repo="git@github.com-ut8mh:UThere8MyHomework/_build_number_gen.git";
 fi
 echo "== central git repo used for generating build numbers is at \"${master_git_repo}\" ==";
 
