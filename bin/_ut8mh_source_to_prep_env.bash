@@ -73,6 +73,13 @@
 #   0java_user empty empty2
 #   EOF
 #
+#       # make sure these repositories exist and are 'cloneable', and otherwise initialized as expected (need more info)
+#   # _maven_UThere8MyHomework_public_repo                ... need more info
+#   # _maven_UThere8MyHomework_private_repo_and_docs      ... need more info
+#   # _build_number_gen                              ... need more info
+#   # 0maven                                         ... need more info
+#   # 0java                                          ... need more info
+#
 #       # if one has access to 'private repositories' then add this flag (this will add to the default cloned repos)
 #   #touch ./flag_fetch_private_git_repos
 #
@@ -382,7 +389,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_"*;
 
-        repo_list=`((echo _build_number_gen _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
+        repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
         repo_ok=1
         for repo in ${repo_list[@]}; do
 
