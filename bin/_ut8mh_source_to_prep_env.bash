@@ -361,7 +361,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         switch_on_old_pull="newly pulled ";
 
-        source "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin/prep_env/_ut8mh_source_to_prep_env__pull_ut8mh_githubs_docs_dir.bash";
+        # source . . . script not sourced in -cloned- environment
 
     fi
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${is_real_ut8mh_env} = "1" ]; then
