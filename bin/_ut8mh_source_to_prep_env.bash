@@ -28,7 +28,7 @@
 #
 #        # optionally create additional files . . . (see comments on ${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR} below)
 #        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_list"                    # insert list of executables you want to make sure are gnu versions
-#        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_keep_in_env_var_list"    # insert list of executables you want to keep in variables of form ${[A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_execname}
+#        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_keep_in_env_var_list"    # insert list of executables you want to keep in variables of form ${UT8MH_GNU_BIN_execname}
 #
 #   # -- set up for git
 #
@@ -116,7 +116,7 @@ if [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X1" ]; then
     echo "(the http://github.com/UThere8MyHomework standard Java (et. al.) dev env is already prepared)";
     echo;
 
-    "${[A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_true}";
+    "${UT8MH_GNU_BIN_true}";
 
 elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
@@ -234,7 +234,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                     done
 
                     if [ "${keep}" = "1" ]; then
-                        vname="[A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_${execname}";
+                        vname="UT8MH_GNU_BIN_${execname}";
                         export ${vname}="${fexecname}";
                     fi
                 fi
@@ -255,7 +255,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
                     # NOTE:  after this point at any time we know ${GITHUB_UT8MH_DEV_STANDARD_PREP_OK} is "1"
                     # we can use full GNU command-line options, much more readable.  We'll avoid messing
-                    # with bash 'builtin', 'enable', etc., and use the ${[A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_cmdname} form to
+                    # with bash 'builtin', 'enable', etc., and use the ${UT8MH_GNU_BIN_cmdname} form to
                     # invoke actual programs whenever we want to make sure we're not using the builtin for,
                     # e.g., 'echo' or some other command.
 
@@ -514,7 +514,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # done
         unset GITHUB_UT8MH_DEV_STANDARD_PREP_OK;
-        "${[A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_true}";
+        "${UT8MH_GNU_BIN_true}";
 
     else
 
@@ -527,7 +527,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR;
 
-        for badvar in `( env | sed -e 's/=.*//' | grep [A-Z][A-Z]8[A-Z][A-Z]_GNU_BIN_ ) 2>/dev/null`; do
+        for badvar in `( env | sed -e 's/=.*//' | grep UT8MH_GNU_BIN_ ) 2>/dev/null`; do
             unset "${badvar}";
         done
         unset badvar;
