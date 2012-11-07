@@ -549,7 +549,9 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
         # modify prompt
-        export PS1="_\[\e[1;31m\]c\[\e[1;32m\]8\[\e[1;33m\]i\[\e[1;34m\]o\[\e[1;35m\]n\[\e[0;0m\]_[\u@\h \W]\$ "
+        if [ -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin/prep_env/_ut8mh_source_to_prep_env__set_PS1_prompt.bash" ]; then
+            source "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin/prep_env/_ut8mh_source_to_prep_env__set_PS1_prompt.bash";
+        fi
 
         # modify $PATH
         export PATH="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin:${PATH}";
