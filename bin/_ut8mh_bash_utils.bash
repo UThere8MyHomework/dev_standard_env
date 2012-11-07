@@ -72,16 +72,16 @@ if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
     mkdir --parents "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp";
     rm -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
-    for cd_alias_name in `alias | sed --expression 's/^alias //' --expression 's/=.*//' | grep '^ut8mh_cd_' | xargs echo`; do
-        #echo "ALIAS CD: ${cd_alias_name}";
-        pd_alias_name=`echo ${cd_alias_name} | sed --expression 's/ut8mh_cd_/ut8mh_pd_/'`;
-        #echo "ALIAS PD: ${pd_alias_name}";
-        pd_alias_cmd=`alias ${cd_alias_name} | sed --expression 's/^ *alias  *ut8mh_cd_[^ =]*=//' --expression "s/^'cd /'pushd /"`;  # --expression \"s\'cd /'pushd /\"`;
+    for QTVEQkRGRTkz__cd_alias_name in `alias | sed --expression 's/^alias //' --expression 's/=.*//' | grep '^ut8mh_cd_' | xargs echo`; do
+        #echo "ALIAS CD: ${QTVEQkRGRTkz__cd_alias_name}";
+        QTVEQkRGRTkz__pd_alias_name=`echo ${QTVEQkRGRTkz__cd_alias_name} | sed --expression 's/ut8mh_cd_/ut8mh_pd_/'`;
+        #echo "ALIAS PD: ${QTVEQkRGRTkz__pd_alias_name}";
+        pd_alias_cmd=`alias ${QTVEQkRGRTkz__cd_alias_name} | sed --expression 's/^ *alias  *ut8mh_cd_[^ =]*=//' --expression "s/^'cd /'pushd /"`;  # --expression \"s\'cd /'pushd /\"`;
         #echo "  CMD PD: ${pd_alias_cmd}";
-        echo "alias ${pd_alias_name}=${pd_alias_cmd}" >> "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
+        echo "alias ${QTVEQkRGRTkz__pd_alias_name}=${pd_alias_cmd}" >> "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
     done
-    unset cd_alias_name;
-    unset pd_alias_name;
+    unset QTVEQkRGRTkz__cd_alias_name;
+    unset QTVEQkRGRTkz__pd_alias_name;
 
     source "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
     rm -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";

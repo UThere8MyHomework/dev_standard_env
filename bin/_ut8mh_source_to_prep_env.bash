@@ -175,6 +175,32 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
     fi
 
 
+        # -- prepare the repository directory (we don't want these actually under the dev env, we want links to the repositories instead -- licensing and logistical issues
+
+    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+
+        GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME%/*}/_${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME##*/}-repo-dir"
+
+        if [ ! -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}" ]; then
+            mkdir "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}" 2>/dev/null;
+        fi;
+        if [ ! -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code" ]; then
+            mkdir "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code" 2>/dev/null;
+        fi
+        if [ ! -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___uncategorized" ]; then
+            mkdir "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___uncategorized" 2>/dev/null;
+        fi
+
+        if [ ! -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code" ] || [ ! -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___uncategorized" ]; then
+            echo "  ERROR:  repository 'directory' \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}\" does not exist or could not be properly created";
+            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+        else
+            echo "  Repositories for dev env are at or will be placed at: \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}\" (and subdirectories)";
+        fi
+
+    fi
+
+
         # -- make sure various programs found are the "real" standard GNU builds (rather than the OSX versions, for example) -- we need consistency
 
         # NOTE:  note "proper" absence of 'cd', 'wait' -- and no way to check for properly for 'bash'
@@ -357,6 +383,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
             GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
         else
             echo "  Maven-based code to be at  : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code\"";
+            # DO_NOT:  rm --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code"/* 2>/dev/null;
         fi
     fi
 
@@ -369,9 +396,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         QTVEQkRGRTkz__switch_on_old_pull="newly pulled ";
 
-        echo "**BEFORE**";
         # source . . . script not sourced in -cloned- environment
-        echo "**AFTER**";
 
     else
         QTVEQkRGRTkz__is_real_ut8mh_env=0;
@@ -392,7 +417,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         echo "  Ensuring Maven-based code is checked out"
 
-        rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_"*;
+        rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/_c856f53b96a8_"*;
 
         QTVEQkRGRTkz__repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
         QTVEQkRGRTkz__repo_ok=1
@@ -400,7 +425,8 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
             if [ ${QTVEQkRGRTkz__repo_ok} = "1" ]; then
 
-                QTVEQkRGRTkz__repo_dir="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}";
+                QTVEQkRGRTkz__repo_dir_maven="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/${QTVEQkRGRTkz__repo}";
+                QTVEQkRGRTkz__repo_dir_uncategorized="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___uncategorized/${QTVEQkRGRTkz__repo}";
 
                 QTVEQkRGRTkz__fetch_repo=1;
                 if [ ${QTVEQkRGRTkz__repo} = "_maven_UThere8MyHomework_private_repo_and_docs" ] && [ ! -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/flag_fetch_private_git_repos" ]; then
@@ -409,11 +435,21 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
                 if [ ${QTVEQkRGRTkz__fetch_repo} = "1" ]; then
 
-                    QTVEQkRGRTkz__repo_dir_tmp="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_${QTVEQkRGRTkz__repo}";
+                    QTVEQkRGRTkz__repo_dir_tmp="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/_c856f53b96a8_${QTVEQkRGRTkz__repo}";
 
-                    if [ -d  "${QTVEQkRGRTkz__repo_dir}/.git" ]; then
-                        echo "    remote repository \"${QTVEQkRGRTkz__repo}\" is (presumably) already mapped to local repository \"${QTVEQkRGRTkz__repo_dir}\"";
+                    QTVEQkRGRTkz__already_fetched="";
+                    if [ -d  "${QTVEQkRGRTkz__repo_dir_maven}/.git" ]; then
+                        QTVEQkRGRTkz__already_fetched="${QTVEQkRGRTkz__repo_dir_maven}";
+                    elif [ -d  "${QTVEQkRGRTkz__repo_dir_uncategorized}/.git" ]; then
+                        QTVEQkRGRTkz__already_fetched="${QTVEQkRGRTkz__repo_dir_uncategorized}";
+                    fi
+
+                    if [ "X${QTVEQkRGRTkz__already_fetched}" != "X" ]; then
+                        echo "    remote repository \"${QTVEQkRGRTkz__repo}\" is (presumably) already mapped to local repository \"${QTVEQkRGRTkz__already_fetched}\"";
                     else
+
+                        rm --recursive --force "${QTVEQkRGRTkz__repo_dir_maven}" 2>/dev/null;
+                        rm --recursive --force "${QTVEQkRGRTkz__repo_dir_uncategorized}" 2>/dev/null;
 
                         echo "    dealing with remote repository \"${QTVEQkRGRTkz__repo}\"";
 
@@ -436,30 +472,58 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                         
                         if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ]; then
 
-                            echo "      moving cloned repository from \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir}\"";
+                            if [ -e "${QTVEQkRGRTkz__repo_dir_tmp}/AUX/etc/this_is_a_maven_based_source_code_repo.txt" ]; then
 
-                            mv "${QTVEQkRGRTkz__repo_dir_tmp}" "${QTVEQkRGRTkz__repo_dir}" 2>/dev/null;
+                                QTVEQkRGRTkz__repo_dir_dest="${QTVEQkRGRTkz__repo_dir_maven}";
+
+                                # keep:  QTVEQkRGRTkz__repo_dir_maven
+                                QTVEQkRGRTkz__repo_dir_uncategorized="";
+
+                            else
+
+                                QTVEQkRGRTkz__repo_dir_dest="${QTVEQkRGRTkz__repo_dir_uncategorized}";
+
+                                QTVEQkRGRTkz__repo_dir_maven="";
+                                # keep:  QTVEQkRGRTkz__repo_dir_uncategorized=
+
+                            fi
+
+                            echo "      moving cloned repository from \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir_dest}\"";
+
+                            mv "${QTVEQkRGRTkz__repo_dir_tmp}" "${QTVEQkRGRTkz__repo_dir_dest}" 2>/dev/null;
                             if [ "X$?" != "X0" ]; then
-                                echo "      ERROR:  problems moving cloned repository \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir}\"";
+                                echo "      ERROR:  problems moving cloned repository \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir_dest}\"";
                                 QTVEQkRGRTkz__repo_ok=0;
+                            fi
+
+                            if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ "X${QTVEQkRGRTkz__repo_dir_maven}" != "X" ]; then
+
+                                ln --symbolic "${QTVEQkRGRTkz__repo_dir_maven}" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}" 2>/dev/null;
+                                if [ "X$?" != "X0" ]; then
+                                    echo "      ERROR:  problems linking \"${QTVEQkRGRTkz__repo_dir_maven}\" into \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}\"";
+                                    QTVEQkRGRTkz__repo_ok=0;
+                                fi
                             fi
                         fi
 
                     fi
                 fi
 
-                if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ -d "${QTVEQkRGRTkz__repo_dir}/AUX/bin" ]; then
+                if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ -d "${QTVEQkRGRTkz__repo_dir_dest}/AUX/bin" ]; then
 
                     if [ "X${QTVEQkRGRTkz__extra_path}" = "X" ]; then
-                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__repo_dir}/AUX/bin";
+                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__repo_dir_dest}/AUX/bin";
                     else
-                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__extra_path}:${QTVEQkRGRTkz__repo_dir}/AUX/bin";
+                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__extra_path}:${QTVEQkRGRTkz__repo_dir_dest}/AUX/bin";
                     fi
                 fi
 
                 unset QTVEQkRGRTkz__fetch_repo;
-                unset QTVEQkRGRTkz__repo_dir;
                 unset QTVEQkRGRTkz__repo_dir_tmp;
+                unset QTVEQkRGRTkz__repo_dir_maven;
+                unset QTVEQkRGRTkz__repo_dir_uncategorized;
+                unset QTVEQkRGRTkz__repo_dir_dest;
+                unset QTVEQkRGRTkz__already_fetched;
             fi
 
         done
@@ -507,6 +571,9 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         # remember the settings directory
         export GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR;
 
+        # remember the repository directory
+        export GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR;
+
         # make sure to set 'M2'
         export M2="${M2_HOME}/bin";
 
@@ -531,6 +598,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         unset GITHUB_UT8MH_DEV_STANDARD_PREP_OK;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR;
+        unset GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR;
 
         for QTVEQkRGRTkz__badvar in `( env | sed -e 's/=.*//' | grep UT8MH_GNU_BIN_ ) 2>/dev/null`; do
             unset "${QTVEQkRGRTkz__badvar}";
