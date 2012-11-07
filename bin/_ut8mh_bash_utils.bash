@@ -48,11 +48,11 @@ function _func_ut8mh_ENSURE_COMMAND_STATUS()
     fi
 }
 
+alias ut8mh_git_show_status="( ut8mh_git_show_status.bash | less )";
 alias ut8mh_cd_home="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/.\"";
 alias ut8mh_cd_maven_code="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/.\"";
 alias ut8mh_cd_0java="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/0java/.\"";
 alias ut8mh_cd_0maven="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/0maven/standard_grandparent_project/.\"";
-alias ut8mh_cd_docs_local_copy="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode/.\"";
 alias ut8mh_cd_public_maven_repo_snapshots="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_maven_UThere8MyHomework_public_repo/raw/snapshots/com/UThere8MyHomework/.\"";
 alias ut8mh_cd_public_maven_repo_releases="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_maven_UThere8MyHomework_public_repo/raw/releases/com/UThere8MyHomework/.\"";
 alias ut8mh_kill_build_number_and_uuid_vars_script="rm -f \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_build_number_gen/_tmp-cur_build_info.bash_src\"";
@@ -61,6 +61,32 @@ alias ut8mh_env_unset_build_number_and_uuid_vars="unset GITHUB_UT8MH_DEV__TMP__C
 alias ut8mh_env_echo_build_number_var="echo \${GITHUB_UT8MH_DEV__TMP__CUR_BUILD_NUMBER}";
 alias ut8mh_env_echo_build_uuid_var="echo \${GITHUB_UT8MH_DEV__TMP__CUR_BUILD_UUID}";
 unalias ut8mh_env 2>/dev/null;
+
+if [ -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin/_ut8mh_bash_utils__custom_aliases.bash" ]; then
+    source "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin/_ut8mh_bash_utils__custom_aliases.bash";
+fi
+
+if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+
+    # we're calling this in env-setup script
+
+    mkdir --parents "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp";
+    rm -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
+    for cd_alias_name in `alias | sed --expression 's/^alias //' --expression 's/=.*//' | grep '^ut8mh_cd_' | xargs echo`; do
+        #echo "ALIAS CD: ${cd_alias_name}";
+        pd_alias_name=`echo ${cd_alias_name} | sed --expression 's/ut8mh_cd_/ut8mh_pd_/'`;
+        #echo "ALIAS PD: ${pd_alias_name}";
+        pd_alias_cmd=`alias ${cd_alias_name} | sed --expression 's/^ *alias  *ut8mh_cd_[^ =]*=//' --expression "s/^'cd /'pushd /"`;  # --expression \"s\'cd /'pushd /\"`;
+        #echo "  CMD PD: ${pd_alias_cmd}";
+        echo "alias ${pd_alias_name}=${pd_alias_cmd}" >> "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
+    done
+    unset cd_alias_name;
+    unset pd_alias_name;
+
+    source "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
+    rm -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/tmp/_tmp_ut8mh_bash_utils.txt";
+
+fi;
 
 
 # --- END OF FILE.
