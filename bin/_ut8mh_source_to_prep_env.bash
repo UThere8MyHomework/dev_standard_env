@@ -76,7 +76,8 @@
 #       # make sure these repositories exist and are 'cloneable', and otherwise initialized as expected (need more info)
 #   # _maven_UThere8MyHomework_public_repo                ... need more info
 #   # _maven_UThere8MyHomework_private_repo_and_docs      ... need more info
-#   # _build_number_gen                              ... need more info
+#   # _build_number_gen
+#   #   should have same contents as repository https://github.com/clarafaction/_build_number_gen (including '.gitignore')
 #   # 0maven                                         ... need more info
 #   # 0java                                          ... need more info
 #
@@ -177,14 +178,14 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         # -- make sure various programs found are the "real" standard GNU builds (rather than the OSX versions, for example) -- we need consistency
 
         # NOTE:  note "proper" absence of 'cd', 'wait' -- and no way to check for properly for 'bash'
-    gnu_exec_list="true false echo env cat head tail grep sort which find ls mkdir ln mv rm rmdir touch cp chmod date sleep";
-    gnu_exec_list_custom=`cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_gnu_exec_list" 2>/dev/null`;
-    gnu_exec_list="${gnu_exec_list} ${gnu_exec_list_custom}";
-    unset gnu_exec_list_custom;
-    gnu_exec_keep_in_env_var_list="true false echo";
-    gnu_exec_keep_in_env_var_list_custom=`cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_gnu_exec_keep_in_env_var_list" 2>/dev/null`;
-    gnu_exec_keep_in_env_var_list="${gnu_exec_keep_in_env_var_list} ${gnu_exec_keep_in_env_var_list_custom}";
-    unset gnu_exec_keep_in_env_var_list_custom;
+    QTVEQkRGRTkz__gnu_exec_list="true false echo env cat head tail grep sort which find ls mkdir ln mv rm rmdir touch cp chmod date sleep";
+    QTVEQkRGRTkz__gnu_exec_list_custom=`cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_gnu_exec_list" 2>/dev/null`;
+    QTVEQkRGRTkz__gnu_exec_list="${QTVEQkRGRTkz__gnu_exec_list} ${QTVEQkRGRTkz__gnu_exec_list_custom}";
+    unset QTVEQkRGRTkz__gnu_exec_list_custom;
+    QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list="true false echo";
+    QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list_custom=`cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_gnu_exec_keep_in_env_var_list" 2>/dev/null`;
+    QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list="${QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list} ${QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list_custom}";
+    unset QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list_custom;
 
         # avoid aliases during gnu-exec check
     shopt -u expand_aliases;
@@ -193,60 +194,60 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
                     # inside here we generally can't assume GNU coreutils, etc., are in use
 
-        for execname in ${gnu_exec_list}; do
+        for QTVEQkRGRTkz__execname in ${QTVEQkRGRTkz__gnu_exec_list}; do
 
             if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
-                echo "  checking whether executable \"${execname}\" is GNU version";
+                echo "  checking whether executable \"${QTVEQkRGRTkz__execname}\" is GNU version";
 
-                fexecname=`which ${execname} 2>/dev/null`;
+                QTVEQkRGRTkz__fexecname=`which ${QTVEQkRGRTkz__execname} 2>/dev/null`;
 
-                if [ "X${fexecname}" = "X" ]; then
-                    echo "  ERROR:  executable \"${execname}\" is not found";
+                if [ "X${QTVEQkRGRTkz__fexecname}" = "X" ]; then
+                    echo "  ERROR:  executable \"${QTVEQkRGRTkz__execname}\" is not found";
                     GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
                 else
-                    echo "    executable is at \"${fexecname}\"";
+                    echo "    executable is at \"${QTVEQkRGRTkz__fexecname}\"";
                 fi
             fi
 
             if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
-                if [ "X${execname}" = "Xwhich" ]; then
-                    numlines=`( "${fexecname}" --help | grep -i 'Report bugs to .*gnu\\.org' | wc -l | sed -e 's/ //g') 2>/dev/null`;
-                elif [ "X${execname}" = "Xfind" ]; then
-                    numlines=`( "${fexecname}" --help | grep -i 'savannah\\.gnu\\.org' | wc -l | sed -e 's/ //g') 2>/dev/null`;
+                if [ "X${QTVEQkRGRTkz__execname}" = "Xwhich" ]; then
+                    QTVEQkRGRTkz__numlines=`( "${QTVEQkRGRTkz__fexecname}" --help | grep -i 'Report bugs to .*gnu\\.org' | wc -l | sed -e 's/ //g') 2>/dev/null`;
+                elif [ "X${QTVEQkRGRTkz__execname}" = "Xfind" ]; then
+                    QTVEQkRGRTkz__numlines=`( "${QTVEQkRGRTkz__fexecname}" --help | grep -i 'savannah\\.gnu\\.org' | wc -l | sed -e 's/ //g') 2>/dev/null`;
                 else
-                    numlines=`( "${fexecname}" --help | grep -i 'General help using GNU software' | wc -l | sed -e 's/ //g') 2>/dev/null`;
+                    QTVEQkRGRTkz__numlines=`( "${QTVEQkRGRTkz__fexecname}" --help | grep -i 'General help using GNU software' | wc -l | sed -e 's/ //g') 2>/dev/null`;
                 fi
 
-                if [ "X${numlines}" != "X1" ]; then
-                    echo "  ERROR:  executable \"${execname}\" is not the standard GNU version";
+                if [ "X${QTVEQkRGRTkz__numlines}" != "X1" ]; then
+                    echo "  ERROR:  executable \"${QTVEQkRGRTkz__execname}\" is not the standard GNU version";
                     GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
                 fi
 
                 if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
-                    keep=0;
-                    for execname2 in ${gnu_exec_keep_in_env_var_list}; do
-                        if [ ${execname} = ${execname2} ]; then
-                            keep=1;
+                    QTVEQkRGRTkz__keep=0;
+                    for QTVEQkRGRTkz__execname2 in ${QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list}; do
+                        if [ ${QTVEQkRGRTkz__execname} = ${QTVEQkRGRTkz__execname2} ]; then
+                            QTVEQkRGRTkz__keep=1;
                         fi
                     done
 
-                    if [ "${keep}" = "1" ]; then
-                        vname="UT8MH_GNU_BIN_${execname}";
-                        export ${vname}="${fexecname}";
+                    if [ "${QTVEQkRGRTkz__keep}" = "1" ]; then
+                        QTVEQkRGRTkz__vname="UT8MH_GNU_BIN_${QTVEQkRGRTkz__execname}";
+                        export ${QTVEQkRGRTkz__vname}="${QTVEQkRGRTkz__fexecname}";
                     fi
                 fi
             fi
         done
 
-        unset execname;
-        unset fexecname;
-        unset numlines;
-        unset keep;
-        unset execname2;
-        unset vname;
+        unset QTVEQkRGRTkz__execname;
+        unset QTVEQkRGRTkz__fexecname;
+        unset QTVEQkRGRTkz__numlines;
+        unset QTVEQkRGRTkz__keep;
+        unset QTVEQkRGRTkz__execname2;
+        unset QTVEQkRGRTkz__vname;
 
     fi
 
@@ -277,37 +278,37 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
     fi
 
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-        mvn_version=`(mvn --version 2>/dev/null) | grep --ignore-case 'apache maven'`;
-        if [ "X${mvn_version}" = "X" ]; then
+        QTVEQkRGRTkz__mvn_version=`(mvn --version 2>/dev/null) | grep --ignore-case 'apache maven'`;
+        if [ "X${QTVEQkRGRTkz__mvn_version}" = "X" ]; then
             echo "  ERROR:  Apache Maven (mvn) version not found"
             GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
         else
-            echo "  Apache Maven (mvn) version : \"${mvn_version}\"";
+            echo "  Apache Maven (mvn) version : \"${QTVEQkRGRTkz__mvn_version}\"";
             echo "  Apache Maven (mvn) path    : \"${M2_HOME}/bin/mvn\"";
         fi
-        unset mvn_version;
+        unset QTVEQkRGRTkz__mvn_version;
     fi
 
 
         # -- get Apache ant's version
 
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-        ant_path=`which ant 2>/dev/null`;
-        if [ "X${ant_path}" = "X" ]; then
+        QTVEQkRGRTkz__ant_path=`which ant 2>/dev/null`;
+        if [ "X${QTVEQkRGRTkz__ant_path}" = "X" ]; then
             echo "  ERROR:  Apache Ant 'ant' executable not found"
             GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
         else
-            ant_version=`(ant -diagnostics 2>/dev/null) | grep --ignore-case 'apache ant.*version' | grep --ignore-case --invert-match '^ant\\.version'`;
-            if [ "X${ant_version}" = "X" ]; then
+            QTVEQkRGRTkz__ant_version=`(ant -diagnostics 2>/dev/null) | grep --ignore-case 'apache ant.*version' | grep --ignore-case --invert-match '^ant\\.version'`;
+            if [ "X${QTVEQkRGRTkz__ant_version}" = "X" ]; then
                 echo "  ERROR:  Apache Ant (ant) version not found"
                 GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
             else
-                echo "  Apache Ant   (ant) version : \"${ant_version}\"";
-                echo "  Apache Ant   (ant) path is : \"${ant_path}\"";
+                echo "  Apache Ant   (ant) version : \"${QTVEQkRGRTkz__ant_version}\"";
+                echo "  Apache Ant   (ant) path is : \"${QTVEQkRGRTkz__ant_path}\"";
             fi
-            unset ant_version;
+            unset QTVEQkRGRTkz__ant_version;
         fi
-        unset ant_path;
+        unset QTVEQkRGRTkz__ant_path;
     fi
 
 
@@ -362,113 +363,117 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # -- create directory for dealing with code documentation that will be synced to github "GitHub Pages" at http://UThere8MyHomework.github.com/code/...
 
-    switch_on_old_pull="(presumably) ";
-    is_real_ut8mh_env=0;
+    QTVEQkRGRTkz__switch_on_old_pull="(presumably) ";
+    QTVEQkRGRTkz__is_real_ut8mh_env=0;
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ! -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode" ]; then
 
-        switch_on_old_pull="newly pulled ";
+        QTVEQkRGRTkz__switch_on_old_pull="newly pulled ";
 
+        echo "**BEFORE**";
         # source . . . script not sourced in -cloned- environment
+        echo "**AFTER**";
 
+    else
+        QTVEQkRGRTkz__is_real_ut8mh_env=0;
     fi
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${is_real_ut8mh_env} = "1" ]; then
+    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${QTVEQkRGRTkz__is_real_ut8mh_env} = "1" ]; then
         # message if local docs copy succeeded or was already present
-        echo "  Local copy of docs repo ${switch_on_old_pull}at : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
+        echo "  Local copy of docs repo ${QTVEQkRGRTkz__switch_on_old_pull}at : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/github_docs_at_UThere8MyHomeworkDgithubDcomScode\"";
     fi
-    unset switch_on_old_pull;
-    unset is_real_ut8mh_env;
+    unset QTVEQkRGRTkz__switch_on_old_pull;
+    unset QTVEQkRGRTkz__is_real_ut8mh_env;
 
 
         # -- make sure various directories are pulled from github
 
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
 
-        extra_path=""
+        QTVEQkRGRTkz__extra_path=""
 
         echo "  Ensuring Maven-based code is checked out"
 
         rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_"*;
 
-        repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
-        repo_ok=1
-        for repo in ${repo_list[@]}; do
+        QTVEQkRGRTkz__repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
+        QTVEQkRGRTkz__repo_ok=1
+        for QTVEQkRGRTkz__repo in ${QTVEQkRGRTkz__repo_list[@]}; do
 
-            if [ ${repo_ok} = "1" ]; then
+            if [ ${QTVEQkRGRTkz__repo_ok} = "1" ]; then
 
-                repo_dir="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${repo}";
+                QTVEQkRGRTkz__repo_dir="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}";
 
-                fetch_repo=1;
-                if [ ${repo} = "_maven_UThere8MyHomework_private_repo_and_docs" ] && [ ! -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/flag_fetch_private_git_repos" ]; then
-                    fetch_repo=0;
+                QTVEQkRGRTkz__fetch_repo=1;
+                if [ ${QTVEQkRGRTkz__repo} = "_maven_UThere8MyHomework_private_repo_and_docs" ] && [ ! -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/flag_fetch_private_git_repos" ]; then
+                    QTVEQkRGRTkz__fetch_repo=0;
                 fi
 
-                if [ ${fetch_repo} = "1" ]; then
+                if [ ${QTVEQkRGRTkz__fetch_repo} = "1" ]; then
 
-                    repo_dir_tmp="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_${repo}";
+                    QTVEQkRGRTkz__repo_dir_tmp="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_c856f53b96a8_${QTVEQkRGRTkz__repo}";
 
-                    if [ -d  "${repo_dir}/.git" ]; then
-                        echo "    remote repository \"${repo}\" is (presumably) already mapped to local repository \"${repo_dir}\"";
+                    if [ -d  "${QTVEQkRGRTkz__repo_dir}/.git" ]; then
+                        echo "    remote repository \"${QTVEQkRGRTkz__repo}\" is (presumably) already mapped to local repository \"${QTVEQkRGRTkz__repo_dir}\"";
                     else
 
-                        echo "    dealing with remote repository \"${repo}\"";
+                        echo "    dealing with remote repository \"${QTVEQkRGRTkz__repo}\"";
 
-                        echo "      cloning remote repository \"${repo}\" into \"${repo_dir_tmp}\"";
+                        echo "      cloning remote repository \"${QTVEQkRGRTkz__repo}\" into \"${QTVEQkRGRTkz__repo_dir_tmp}\"";
 
-                        mkdir "${repo_dir_tmp}" 2>/dev/null;
+                        mkdir "${QTVEQkRGRTkz__repo_dir_tmp}" 2>/dev/null;
                         if [ "X$?" != "X0" ]; then
-                            echo "      ERROR:  could not create directory \"${repo_dir_tmp}\"";
-                            repo_ok=0;
+                            echo "      ERROR:  could not create directory \"${QTVEQkRGRTkz__repo_dir_tmp}\"";
+                            QTVEQkRGRTkz__repo_ok=0;
                         fi
                         
-                        if [ "X${repo_ok}" = "X1" ]; then
+                        if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ]; then
 
-                            (cd "${repo_dir_tmp}" && (git clone "git@github.com-ut8mh:UThere8MyHomework/${repo}" . >/dev/null 2>/dev/null))
+                            (cd "${QTVEQkRGRTkz__repo_dir_tmp}" && (git clone "git@github.com-ut8mh:UThere8MyHomework/${QTVEQkRGRTkz__repo}" . >/dev/null 2>/dev/null))
                             if [ "X$?" != "X0" ]; then
-                                echo "      ERROR:  problems cloning remote repository \"${repo}\" to local repository \"${repo_dir_tmp}\"";
-                                repo_ok=0;
+                                echo "      ERROR:  problems cloning remote repository \"${QTVEQkRGRTkz__repo}\" to local repository \"${QTVEQkRGRTkz__repo_dir_tmp}\"";
+                                QTVEQkRGRTkz__repo_ok=0;
                             fi
                         fi
                         
-                        if [ "X${repo_ok}" = "X1" ]; then
+                        if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ]; then
 
-                            echo "      moving cloned repository from \"${repo_dir_tmp}\" to \"${repo_dir}\"";
+                            echo "      moving cloned repository from \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir}\"";
 
-                            mv "${repo_dir_tmp}" "${repo_dir}" 2>/dev/null;
+                            mv "${QTVEQkRGRTkz__repo_dir_tmp}" "${QTVEQkRGRTkz__repo_dir}" 2>/dev/null;
                             if [ "X$?" != "X0" ]; then
-                                echo "      ERROR:  problems moving cloned repository \"${repo_dir_tmp}\" to \"${repo_dir}\"";
-                                repo_ok=0;
+                                echo "      ERROR:  problems moving cloned repository \"${QTVEQkRGRTkz__repo_dir_tmp}\" to \"${QTVEQkRGRTkz__repo_dir}\"";
+                                QTVEQkRGRTkz__repo_ok=0;
                             fi
                         fi
 
                     fi
                 fi
 
-                if [ "X${repo_ok}" = "X1" ] && [ -d "${repo_dir}/AUX/bin" ]; then
+                if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ -d "${QTVEQkRGRTkz__repo_dir}/AUX/bin" ]; then
 
-                    if [ "X${extra_path}" = "X" ]; then
-                        extra_path="${repo_dir}/AUX/bin";
+                    if [ "X${QTVEQkRGRTkz__extra_path}" = "X" ]; then
+                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__repo_dir}/AUX/bin";
                     else
-                        extra_path="${extra_path}:${repo_dir}/AUX/bin";
+                        QTVEQkRGRTkz__extra_path="${QTVEQkRGRTkz__extra_path}:${QTVEQkRGRTkz__repo_dir}/AUX/bin";
                     fi
                 fi
 
-                unset fetch_repo;
-                unset repo_dir;
-                unset repo_dir_tmp;
+                unset QTVEQkRGRTkz__fetch_repo;
+                unset QTVEQkRGRTkz__repo_dir;
+                unset QTVEQkRGRTkz__repo_dir_tmp;
             fi
 
         done
-        unset repo_list;
-        unset repo;
+        unset QTVEQkRGRTkz__repo_list;
+        unset QTVEQkRGRTkz__repo;
 
-        if [ ${repo_ok} = "1" ]; then
+        if [ ${QTVEQkRGRTkz__repo_ok} = "1" ]; then
             echo "  Done ensuring Maven-based code is checked out";
         else
             echo "  ERROR:  there were problems ensuring Maven-based code is checked out";
             GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
         fi;
 
-        unset repo_ok;
+        unset QTVEQkRGRTkz__repo_ok;
     fi
 
 
@@ -484,17 +489,17 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # modify $PATH
         export PATH="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/bin:${PATH}";
-        if [ "X${extra_path}" != "X" ]; then
-            export PATH="${PATH}:${extra_path}";
+        if [ "X${QTVEQkRGRTkz__extra_path}" != "X" ]; then
+            export PATH="${PATH}:${QTVEQkRGRTkz__extra_path}";
         fi
         if [ -d "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/bin" ]; then
             export PATH="${PATH}:${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/bin";
         fi
-        unset extra_path;
+        unset QTVEQkRGRTkz__extra_path;
 
         # no need to keep this
-        unset gnu_exec_list;
-        unset gnu_exec_keep_in_env_var_list;
+        unset QTVEQkRGRTkz__gnu_exec_list;
+        unset QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list;
 
         # mark in this shell instance that the dev env is prepared
         export GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED=1;
@@ -518,19 +523,19 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
     else
 
-        unset extra_path;
+        unset QTVEQkRGRTkz__extra_path;
 
-        unset gnu_exec_list;
-        unset gnu_exec_keep_in_env_var_list;
+        unset QTVEQkRGRTkz__gnu_exec_list;
+        unset QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list;
 
         unset GITHUB_UT8MH_DEV_STANDARD_PREP_OK;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR;
 
-        for badvar in `( env | sed -e 's/=.*//' | grep UT8MH_GNU_BIN_ ) 2>/dev/null`; do
-            unset "${badvar}";
+        for QTVEQkRGRTkz__badvar in `( env | sed -e 's/=.*//' | grep UT8MH_GNU_BIN_ ) 2>/dev/null`; do
+            unset "${QTVEQkRGRTkz__badvar}";
         done
-        unset badvar;
+        unset QTVEQkRGRTkz__badvar;
 
         # done
         `which false`;
