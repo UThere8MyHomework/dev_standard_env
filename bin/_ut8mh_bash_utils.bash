@@ -50,13 +50,13 @@ function _func_ut8mh_ENSURE_COMMAND_STATUS()
 
 alias ut8mh_git_show_status="( ut8mh_git_show_status.bash | less )";
 alias ut8mh_cd_home="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/.\"";
-alias ut8mh_cd_maven_code="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/.\"";
-alias ut8mh_cd_0java="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/0java/.\"";
-alias ut8mh_cd_0maven="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/0maven/standard_grandparent_project/.\"";
-alias ut8mh_cd_public_maven_repo_snapshots="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_maven_UThere8MyHomework_public_repo/raw/snapshots/com/UThere8MyHomework/.\"";
-alias ut8mh_cd_public_maven_repo_releases="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_maven_UThere8MyHomework_public_repo/raw/releases/com/UThere8MyHomework/.\"";
-alias ut8mh_kill_build_number_and_uuid_vars_script="rm -f \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_build_number_gen/_tmp-cur_build_info.bash_src\"";
-alias ut8mh_env_set_build_number_and_uuid_vars="source \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_build_number_gen/_tmp_cur_build_info.bash_src\"";
+alias ut8mh_cd_maven_code="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/.\"";
+alias ut8mh_cd_0java="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/0java/.\"";
+alias ut8mh_cd_0maven="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/0maven/standard_grandparent_project/.\"";
+alias ut8mh_cd_public_maven_repo_snapshots="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/_maven_UThere8MyHomework_public_repo/raw/snapshots/com/UThere8MyHomework/.\"";
+alias ut8mh_cd_public_maven_repo_releases="cd \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/_maven_UThere8MyHomework_public_repo/raw/releases/com/UThere8MyHomework/.\"";
+alias ut8mh_kill_build_number_and_uuid_vars_script="rm -f \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/_build_number_gen/_tmp-cur_build_info.bash_src\"";
+alias ut8mh_env_set_build_number_and_uuid_vars="source \"${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/_build_number_gen/_tmp_cur_build_info.bash_src\"";
 alias ut8mh_env_unset_build_number_and_uuid_vars="unset GITHUB_UT8MH_DEV__TMP__CUR_BUILD_NUMBER && unset GITHUB_UT8MH_DEV__TMP__CUR_BUILD_UUID";
 alias ut8mh_env_echo_build_number_var="echo \${GITHUB_UT8MH_DEV__TMP__CUR_BUILD_NUMBER}";
 alias ut8mh_env_echo_build_uuid_var="echo \${GITHUB_UT8MH_DEV__TMP__CUR_BUILD_UUID}";

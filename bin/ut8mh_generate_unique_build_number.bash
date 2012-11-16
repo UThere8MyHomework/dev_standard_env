@@ -72,8 +72,8 @@ echo "== central git repo used for generating build numbers is at \"${master_git
 
 if [ "X${git_repo_dir}" = "X" ]; then
     # outside testing program might set 'git_repo_dir' to alternate directory ... we don't want to corrupt the real repo
-    git_repo_dir="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/_build_number_gen";
-    git_repo_dir_parent="${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code";
+    git_repo_dir="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code/_build_number_gen";
+    git_repo_dir_parent="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___maven_based_code";
 else
     # make sure ${git_repo_dir} parent path exists
     while [ "X${git_repo_dir:${#git_repo_dir}-1}" = "X/" ]; do

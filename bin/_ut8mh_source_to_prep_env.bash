@@ -28,7 +28,7 @@
 #
 #        # optionally create additional files . . . (see comments on ${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR} below)
 #        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_list"                    # insert list of executables you want to make sure are gnu versions
-#        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_keep_in_env_var_list"    # insert list of executables you want to keep in variables of form ${UT8MH_GNU_BIN_execname}
+#        vi "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/additional_gnu_exec_keep_in_env_var_list"    # insert list of executables you want to keep in variables of form ${GITHUB_UT8MH_GNU_BIN_execname}
 #
 #   # -- set up for git
 #
@@ -117,7 +117,7 @@ if [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X1" ]; then
     echo "(the http://github.com/UThere8MyHomework standard Java (et. al.) dev env is already prepared)";
     echo;
 
-    "${UT8MH_GNU_BIN_true}";
+    "${GITHUB_UT8MH_GNU_BIN_true}";
 
 elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
@@ -204,7 +204,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         # -- make sure various programs found are the "real" standard GNU builds (rather than the OSX versions, for example) -- we need consistency
 
         # NOTE:  note "proper" absence of 'cd', 'wait' -- and no way to check for properly for 'bash'
-    QTVEQkRGRTkz__gnu_exec_list="true false echo env cat head tail grep sort which find ls mkdir ln mv rm rmdir touch cp chmod date sleep";
+    QTVEQkRGRTkz__gnu_exec_list="uname true false echo env cat head tail grep sort which find ls mkdir ln mv rm rmdir touch cp chmod date sleep";
     QTVEQkRGRTkz__gnu_exec_list_custom=`cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_gnu_exec_list" 2>/dev/null`;
     QTVEQkRGRTkz__gnu_exec_list="${QTVEQkRGRTkz__gnu_exec_list} ${QTVEQkRGRTkz__gnu_exec_list_custom}";
     unset QTVEQkRGRTkz__gnu_exec_list_custom;
@@ -261,7 +261,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                     done
 
                     if [ "${QTVEQkRGRTkz__keep}" = "1" ]; then
-                        QTVEQkRGRTkz__vname="UT8MH_GNU_BIN_${QTVEQkRGRTkz__execname}";
+                        QTVEQkRGRTkz__vname="GITHUB_UT8MH_GNU_BIN_${QTVEQkRGRTkz__execname}";
                         export ${QTVEQkRGRTkz__vname}="${QTVEQkRGRTkz__fexecname}";
                     fi
                 fi
@@ -282,43 +282,91 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
                     # NOTE:  after this point at any time we know ${GITHUB_UT8MH_DEV_STANDARD_PREP_OK} is "1"
                     # we can use full GNU command-line options, much more readable.  We'll avoid messing
-                    # with bash 'builtin', 'enable', etc., and use the ${UT8MH_GNU_BIN_cmdname} form to
+                    # with bash 'builtin', 'enable', etc., and use the ${GITHUB_UT8MH_GNU_BIN_cmdname} form to
                     # invoke actual programs whenever we want to make sure we're not using the builtin for,
                     # e.g., 'echo' or some other command.
 
 
-        # -- adjust M2_HOME if needed, make sure Apache Maven is found, and display Maven's version
-
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${#M2_HOME} -lt 2 ]; then
-        echo "ERROR:  Apache Maven's home directory \${M2_HOME} is not defined or 'not long enough'";
-        GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-    fi
-
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${M2_HOME#${M2_HOME%?}} = "/" ]; then
-        export M2_HOME="${M2_HOME%?}";
-    fi
-
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ "`which mvn 2>/dev/null`" != "${M2_HOME}/bin/mvn" ]; then
-        echo "ERROR:  the Apache Maven executable 'mvn' found isn't from \${M2_HOME}";
-        GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-    fi
+        # -- Determine OS type
 
     if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-        QTVEQkRGRTkz__mvn_version=`(mvn --version 2>/dev/null) | grep --ignore-case 'apache maven'`;
-        if [ "X${QTVEQkRGRTkz__mvn_version}" = "X" ]; then
-            echo "  ERROR:  Apache Maven (mvn) version not found"
-            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+
+        for QTVEQkRGRTkz__badvar in `( env | sed -e 's/=.*//' | grep GITHUB_UT8MH_OS_TYPE_ ) 2>/dev/null`; do
+            unset "${QTVEQkRGRTkz__badvar}";
+        done
+        unset QTVEQkRGRTkz__badvar;
+
+        QTVEQkRGRTkz__os_name=`uname --operating-system | sed --expression 's/\([a-z]\)/\U\1/g'`;
+        if [[ ${QTVEQkRGRTkz__os_name} =~ CYGWIN ]]; then
+            GITHUB_UT8MH_OS_TYPE_IS_CYGWIN=1;
+        elif [[ ${QTVEQkRGRTkz__os_name} =~ DARWIN ]]; then
+            GITHUB_UT8MH_OS_TYPE_IS_DARWIN=1;
+        elif [[ ${QTVEQkRGRTkz__os_name} =~ LINUX ]]; then
+            GITHUB_UT8MH_OS_TYPE_IS_LINUX=1;
         else
-            echo "  Apache Maven (mvn) version : \"${QTVEQkRGRTkz__mvn_version}\"";
-            echo "  Apache Maven (mvn) path    : \"${M2_HOME}/bin/mvn\"";
+            QTVEQkRGRTkz__unknown_os=1;
         fi
-        unset QTVEQkRGRTkz__mvn_version;
+
+        if [ "X${GITHUB_UT8MH_OS_TYPE_IS_CYGWIN}" = "X1" ] || [ "X${GITHUB_UT8MH_OS_TYPE_IS_DARWIN}" = "X1" ] || [ "X${GITHUB_UT8MH_OS_TYPE_IS_LINUX}" = "X1" ]; then
+            GITHUB_UT8MH_OS_TYPE_IS_UNIXEY=1;
+        fi
+
+        if [ "X${QTVEQkRGRTkz__unknown_os}" = "X1" ]; then
+            echo "ERROR:  Unknown operating system \"${QTVEQkRGRTkz__os_name}\"";
+            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+        fi
+
+        unset QTVEQkRGRTkz__unknown_os;
+    fi
+    unset QTVEQkRGRTkz__os_name;
+
+
+        # -- Maven/Ant (for Java) may or may not be wanted
+
+    QTVEQkRGRTkz__maven_forced_off="0";
+    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ "X${GITHUB_UT8MH_DEV_MAVEN_IS_AVAILABLE}" = "X0" ]; then
+        QTVEQkRGRTkz__maven_forced_off="1";
+    else
+        GITHUB_UT8MH_DEV_MAVEN_IS_AVAILABLE="1";
+    fi
+
+
+        # -- adjust M2_HOME if needed, make sure Apache Maven is found, and display Maven's version
+
+    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ "X${QTVEQkRGRTkz__maven_forced_off}" = "X0" ]; then
+
+        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${#M2_HOME} -lt 2 ]; then
+            echo "ERROR:  Apache Maven's home directory \${M2_HOME} is not defined or 'not long enough'";
+            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+        fi
+
+        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ ${M2_HOME#${M2_HOME%?}} = "/" ]; then
+            export M2_HOME="${M2_HOME%?}";
+        fi
+
+        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ "`which mvn 2>/dev/null`" != "${M2_HOME}/bin/mvn" ]; then
+            echo "ERROR:  the Apache Maven executable 'mvn' found isn't from \${M2_HOME}";
+            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+        fi
+
+        if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+            QTVEQkRGRTkz__mvn_version=`(mvn --version 2>/dev/null) | grep --ignore-case 'apache maven'`;
+            if [ "X${QTVEQkRGRTkz__mvn_version}" = "X" ]; then
+                echo "  ERROR:  Apache Maven (mvn) version not found"
+                GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+            else
+                echo "  Apache Maven (mvn) version : \"${QTVEQkRGRTkz__mvn_version}\"";
+                echo "  Apache Maven (mvn) path    : \"${M2_HOME}/bin/mvn\"";
+            fi
+            unset QTVEQkRGRTkz__mvn_version;
+        fi
+
     fi
 
 
         # -- get Apache ant's version
 
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ] && [ "X${QTVEQkRGRTkz__maven_forced_off}" = "X0" ]; then
         QTVEQkRGRTkz__ant_path=`which ant 2>/dev/null`;
         if [ "X${QTVEQkRGRTkz__ant_path}" = "X" ]; then
             echo "  ERROR:  Apache Ant 'ant' executable not found"
@@ -349,43 +397,47 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # -- remove any 'etc' that already exists in the base
 
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
-
-        rm --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" 2>/dev/null;
-        if [ -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" ]; then
-
-            echo "  ERROR:  could not remove pre-existing 'etc' from \${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}";
-            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-        fi
-    fi
+    #if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+    #
+    #    rm --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" 2>/dev/null;
+    #    if [ -e "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" ]; then
+    #
+    #        echo "  ERROR:  could not remove pre-existing 'etc' from \${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}";
+    #        GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+    #    fi
+    #fi
 
 
         # -- link the settings-directory's 'etc' into home's 'etc'
 
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+        # NOTE:  we want to change this to avoid the whole "linking" thing now -- we believe
 
-        ln --symbolic "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" 2>/dev/null;
-        if [ ! -L "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" ]; then
-
-            echo "  ERROR:  could not link settings 'etc' to from \${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc";
-            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-        fi
-    fi
+    #if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+    #
+    #    ln --symbolic "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" 2>/dev/null;
+    #    if [ ! -L "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc" ]; then
+    #
+    #        echo "  ERROR:  could not link settings 'etc' to from \${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc";
+    #        GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+    #    fi
+    #fi
 
 
         # -- create directory for dealing with source code and build products
 
-    if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+        # NOTE:  we want to change this to avoid the whole "linking" thing now -- we believe
 
-        mkdir --parents "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code" 2>/dev/null;
-        if [ "X$?" != "X0" ]; then
-            echo "  ERROR:  could not ensure existence of code directory \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code\"";
-            GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
-        else
-            echo "  Maven-based code to be at  : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code\"";
-            # DO_NOT:  rm --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code"/* 2>/dev/null;
-        fi
-    fi
+    #if [ "X${GITHUB_UT8MH_DEV_STANDARD_PREP_OK}" = "X1" ]; then
+    #
+    #    mkdir --parents "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code" 2>/dev/null;
+    #    if [ "X$?" != "X0" ]; then
+    #        echo "  ERROR:  could not ensure existence of code directory \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code\"";
+    #        GITHUB_UT8MH_DEV_STANDARD_PREP_OK=0;
+    #    else
+    #        echo "  Maven-based code to be at  : \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code\"";
+    #        # DO_NOT:  rm --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code"/* 2>/dev/null;
+    #    fi
+    #fi
 
 
         # -- create directory for dealing with code documentation that will be synced to github "GitHub Pages" at http://UThere8MyHomework.github.com/code/...
@@ -419,7 +471,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         rm --recursive --force "${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/_c856f53b96a8_"*;
 
-        QTVEQkRGRTkz__repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
+        QTVEQkRGRTkz__repo_list=`((echo _maven_UThere8MyHomework_public_repo _maven_UThere8MyHomework_private_repo_and_docs _build_number_gen 0maven 0java | sed --expression 's/\s\+/\n/g' | cat "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/additional_checkout_repo_list" - ) 2>/dev/null) | sort --unique | sed --expression ':a;N;$!ba;s/\n/ /g'`
         QTVEQkRGRTkz__repo_ok=1
         for QTVEQkRGRTkz__repo in ${QTVEQkRGRTkz__repo_list[@]}; do
 
@@ -429,7 +481,7 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                 QTVEQkRGRTkz__repo_dir_uncategorized="${GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR}/___uncategorized/${QTVEQkRGRTkz__repo}";
 
                 QTVEQkRGRTkz__fetch_repo=1;
-                if [ ${QTVEQkRGRTkz__repo} = "_maven_UThere8MyHomework_private_repo_and_docs" ] && [ ! -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/etc/flag_fetch_private_git_repos" ]; then
+                if [ ${QTVEQkRGRTkz__repo} = "_maven_UThere8MyHomework_private_repo_and_docs" ] && [ ! -f "${GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR}/etc/flag_fetch_private_git_repos" ]; then
                     QTVEQkRGRTkz__fetch_repo=0;
                 fi
 
@@ -496,14 +548,14 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
                                 QTVEQkRGRTkz__repo_ok=0;
                             fi
 
-                            if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ "X${QTVEQkRGRTkz__repo_dir_maven}" != "X" ]; then
-
-                                ln --symbolic "${QTVEQkRGRTkz__repo_dir_maven}" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}" 2>/dev/null;
-                                if [ "X$?" != "X0" ]; then
-                                    echo "      ERROR:  problems linking \"${QTVEQkRGRTkz__repo_dir_maven}\" into \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}\"";
-                                    QTVEQkRGRTkz__repo_ok=0;
-                                fi
-                            fi
+                            #if [ "X${QTVEQkRGRTkz__repo_ok}" = "X1" ] && [ "X${QTVEQkRGRTkz__repo_dir_maven}" != "X" ]; then
+                            #
+                            #    ln --symbolic "${QTVEQkRGRTkz__repo_dir_maven}" "${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}" 2>/dev/null;
+                            #    if [ "X$?" != "X0" ]; then
+                            #        echo "      ERROR:  problems linking \"${QTVEQkRGRTkz__repo_dir_maven}\" into \"${GITHUB_UT8MH_DEV_STANDARD_ENV_HOME}/maven_based_code/${QTVEQkRGRTkz__repo}\"";
+                            #        QTVEQkRGRTkz__repo_ok=0;
+                            #    fi
+                            #fi
                         fi
 
                     fi
@@ -563,9 +615,10 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         fi
         unset QTVEQkRGRTkz__extra_path;
 
-        # no need to keep this
+        # no need to keep these
         unset QTVEQkRGRTkz__gnu_exec_list;
         unset QTVEQkRGRTkz__gnu_exec_keep_in_env_var_list;
+        unset QTVEQkRGRTkz__maven_forced_off;
 
         # mark in this shell instance that the dev env is prepared
         export GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED=1;
@@ -575,6 +628,16 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # remember the repository directory
         export GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR;
+
+        # remember whether Maven/Ant (for Java) are available
+        export GITHUB_UT8MH_DEV_MAVEN_IS_AVAILABLE;
+
+        # remember OS details
+        export GITHUB_UT8MH_OS_TYPE_IS_CYGWIN;
+        export GITHUB_UT8MH_OS_TYPE_IS_DARWIN;
+        export GITHUB_UT8MH_OS_TYPE_IS_LINUX;
+        export GITHUB_UT8MH_OS_TYPE_IS_UNIXEY;
+        export GITHUB_UT8MH_OS_TYPE_IS_WINDOWS;
 
         # make sure to set 'M2'
         export M2="${M2_HOME}/bin";
@@ -588,9 +651,14 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
 
         # done
         unset GITHUB_UT8MH_DEV_STANDARD_PREP_OK;
-        "${UT8MH_GNU_BIN_true}";
+        "${GITHUB_UT8MH_GNU_BIN_true}";
 
     else
+
+        if [ "X${QTVEQkRGRTkz__maven_forced_off}" = "X0" ]; then
+            unset GITHUB_UT8MH_DEV_MAVEN_IS_AVAILABLE;
+        fi
+        unset QTVEQkRGRTkz__maven_forced_off;
 
         unset QTVEQkRGRTkz__extra_path;
 
@@ -601,8 +669,9 @@ elif [ "X${GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED}" = "X" ]; then
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_HAS_BEEN_PREPARED;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_SETTINGS_DIR;
         unset GITHUB_UT8MH_DEV_STANDARD_ENV_REPO_DIR;
+        # GITHUB_UT8MH_OS_TYPE_*** already taken care of
 
-        for QTVEQkRGRTkz__badvar in `( env | sed -e 's/=.*//' | grep UT8MH_GNU_BIN_ ) 2>/dev/null`; do
+        for QTVEQkRGRTkz__badvar in `( env | sed -e 's/=.*//' | grep GITHUB_UT8MH_GNU_BIN_ ) 2>/dev/null`; do
             unset "${QTVEQkRGRTkz__badvar}";
         done
         unset QTVEQkRGRTkz__badvar;
